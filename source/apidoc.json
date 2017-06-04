@@ -1,0 +1,19 @@
+{
+  "name": "MAPI",
+  "description": "mapi document",
+  "title": "mapi document",
+  "url": "http://m.apps.ssg.com",
+  "sampleUrl": "http://m.apps.ssg.com",
+  "header": {
+    "title": "개요",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "mapi footer",
+    "filename": "footer.md"
+  },
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}
