@@ -1,20 +1,19 @@
 {
-  "name": "apidoc-example",
-  "version": "0.3.0",
-  "description": "apidoc example project",
-  "title": "Custom apiDoc browser title",
-  "url" : "https://api.github.com/v1",
-  "sampleUrl": "https://api.github.com/v1",
+  "name": "MAPI",
+  "description": "mapi document",
+  "title": "mapi document",
+  "url": "http://m.apps.ssg.com",
+  "sampleUrl": "http://m.apps.ssg.com",
   "header": {
-    "title": "My own header title",
+    "title": "개요",
     "filename": "header.md"
   },
   "footer": {
-    "title": "My own footer title",
+    "title": "mapi footer",
     "filename": "footer.md"
   },
   "template": {
-  	"withCompare": true,
-  	"withGenerator": true
+    "withCompare": true,
+    "withGenerator": true
   }
 }
