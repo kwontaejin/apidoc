@@ -1,6 +1,5 @@
 basicServer.js
 ~swp
 node_modules/
-mapiapp/bin/
-mapiapp/node_modules/
-mapiapp/public/
+mapiapp/
+template/*
