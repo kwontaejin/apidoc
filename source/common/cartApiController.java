@@ -1,8 +1,9 @@
 /**
- * @api {post} /cartApi/insertCartItem.ssg /cartApi/insertCartItem.ssg
+ * @api {post} /cartApi/insertCartItem.ssg 장바구니담기
  * @apiVersion 0.0.0
  * @apiName CartApiController.insertCartItem
- * @apiGroup CartApiController
+ * @apiGroup Front Cart
+ * @apiSampleRequest off
  * @apiPermission none
  *
  * @apiDescription 전시리스트에서 상품을 장바구니에 담을때 사용.

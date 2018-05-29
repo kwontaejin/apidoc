@@ -17,14 +17,14 @@ module.exports = function (app) {
       zone = 'stg-';
     }
 
-
     console.log('[Sample Request Start] url : ' + req.body.retUrl + ', zone : ' + (req.body.zone === '' ? 'prod' : req.body.zone));
     console.log('parameter : ' + JSON.stringify(req.body.parameter));
 
     // prepare the header
     var headers = {
       'Content-Type': 'application/json',
-      'Cookie' : req.headers.cookie
+      'Cookie' : (req.headers.cookie == undefined ? '' : req.headers.cookie),
+      'User-Agent' : 'mapi-doc'
     };
 
     var fullUrl = urlLib.parse(req.body.retUrl);
@@ -41,7 +41,6 @@ module.exports = function (app) {
         responseString += data;
       });
       response.on('end', function () {
-        //console.log(responseString);
         var responseObject = JSON.parse(responseString);
         res.json(responseObject);
       });

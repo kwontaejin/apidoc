@@ -1,19 +1,24 @@
 {
   "name": "MAPI",
   "description": "mapi document",
-  "title": "mapi document",
-  "url": "http://m.apps.ssg.com",
-  "sampleUrl": "http://m.apps.ssg.com",
+  "title": "SSG Mapi Doc",
+  "url" : "http://m.apps.ssg.com",
+  "sampleUrl":"http://m.apps.ssg.com",
   "header": {
     "title": "개요",
     "filename": "header.md"
   },
   "footer": {
-    "title": "mapi footer",
+    "title": "기타",
     "filename": "footer.md"
   },
   "template": {
-    "withCompare": true,
-    "withGenerator": true
-  }
+  	"withCompare": true,
+  	"withGenerator": true
+  },
+  "order":[
+    "Sample",
+    "App_Run",
+    "INFO_API"
+  ]
 }
