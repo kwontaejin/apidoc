@@ -283,6 +283,20 @@ require([
     // remove loader
     $('#loader').remove();
 
+    for(var x = 0; x < nav.length; x++) {
+        if(nav[x].group === "_") {
+            nav[x].notMyGroup = false;
+
+        } else if(nav[x].group === "header") {
+            nav[x].notMyGroup = false;
+
+        } else if(apiProject.group === nav[x].group) {
+            nav[x].notMyGroup = false;
+        } else {
+            nav[x].notMyGroup = true;
+        }
+    }
+    
     // render sidenav
     var fields = {
         nav: nav
@@ -309,68 +323,70 @@ require([
     var articleVersions = {};
     var content = '';
     apiGroups.forEach(function(groupEntry) {
-        var articles = [];
-        var oldName = '';
-        var fields = {};
-        var title = groupEntry;
-        var description = '';
-        articleVersions[groupEntry] = {};
+        if(apiProject.group === groupEntry) {
+            var articles = [];
+            var oldName = '';
+            var fields = {};
+            var title = groupEntry;
+            var description = '';
+            articleVersions[groupEntry] = {};
 
-        // render all articles of a group
-        api.forEach(function(entry) {
-            if(groupEntry === entry.group) {
-                if (oldName !== entry.name) {
-                    // determine versions
-                    api.forEach(function(versionEntry) {
-                        if (groupEntry === versionEntry.group && entry.name === versionEntry.name) {
-                            if ( ! articleVersions[entry.group].hasOwnProperty(entry.name) ) {
-                                articleVersions[entry.group][entry.name] = [];
+            // render all articles of a group
+            api.forEach(function(entry) {
+                if(groupEntry === entry.group) {
+                    if (oldName !== entry.name) {
+                        // determine versions
+                        api.forEach(function(versionEntry) {
+                            if (groupEntry === versionEntry.group && entry.name === versionEntry.name) {
+                                if ( ! articleVersions[entry.group].hasOwnProperty(entry.name) ) {
+                                    articleVersions[entry.group][entry.name] = [];
+                                }
+                                articleVersions[entry.group][entry.name].push(versionEntry.version);
                             }
-                            articleVersions[entry.group][entry.name].push(versionEntry.version);
-                        }
+                        });
+                        fields = {
+                            article: entry,
+                            versions: articleVersions[entry.group][entry.name]
+                        };
+                    } else {
+                        fields = {
+                            article: entry,
+                            hidden: true,
+                            versions: articleVersions[entry.group][entry.name]
+                        };
+                    }
+
+                    // add prefix URL for endpoint
+                    if (apiProject.url)
+                        fields.article.url = apiProject.url + fields.article.url;
+
+                    addArticleSettings(fields, entry);
+
+                    if (entry.groupTitle)
+                        title = entry.groupTitle;
+
+                    // TODO: make groupDescription compareable with older versions (not important for the moment)
+                    if (entry.groupDescription)
+                        description = entry.groupDescription;
+
+                    articles.push({
+                        article: templateArticle(fields),
+                        group: entry.group,
+                        name: entry.name
                     });
-                    fields = {
-                        article: entry,
-                        versions: articleVersions[entry.group][entry.name]
-                    };
-                } else {
-                    fields = {
-                        article: entry,
-                        hidden: true,
-                        versions: articleVersions[entry.group][entry.name]
-                    };
+                    oldName = entry.name;
                 }
+            });
 
-                // add prefix URL for endpoint
-                if (apiProject.url)
-                    fields.article.url = apiProject.url + fields.article.url;
-
-                addArticleSettings(fields, entry);
-
-                if (entry.groupTitle)
-                    title = entry.groupTitle;
-
-                // TODO: make groupDescription compareable with older versions (not important for the moment)
-                if (entry.groupDescription)
-                    description = entry.groupDescription;
-
-                articles.push({
-                    article: templateArticle(fields),
-                    group: entry.group,
-                    name: entry.name
-                });
-                oldName = entry.name;
-            }
-        });
-
-        // render Section with Articles
-        var fields = {
-            group: groupEntry,
-            title: title,
-            description: description,
-            articles: articles
-        };
-        content += templateSections(fields);
+            // render Section with Articles
+            var fields = {
+                group: groupEntry,
+                title: title,
+                description: description,
+                articles: articles
+            };
+            content += templateSections(fields);
+        }
     });
     $('#sections').append( content );
 
@@ -378,7 +394,7 @@ require([
     $(this).scrollspy({ target: '#scrollingNav', offset: 18 });
 
     // Content-Scroll on Navigation click.
-    $('.sidenav').find('a').on('click', function(e) {
+    $('.sidenav :not(.nav-no-animate)').find('a').on('click', function(e) {
         e.preventDefault();
         var id = $(this).attr('href');
         if ($(id).length > 0)

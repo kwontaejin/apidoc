@@ -24,13 +24,13 @@
     {{#if title}}
       {{#if isHeader}}
         {{#if isFixed}}
-          <li class="nav-fixed nav-header navbar-btn nav-list-item" data-group="{{group}}"><a href="#api-{{group}}">{{underscoreToSpace title}}</a></li>
+          <li class="nav-fixed nav-header navbar-btn nav-list-item{{#if notMyGroup}} nav-no-animate{{/if}}" data-group="{{group}}"><a href="#api-{{group}}">{{underscoreToSpace title}}</a></li>
         {{else}}
-          <li class="nav-header nav-list-item" data-group="{{group}}"><a href="#api-{{group}}">{{underscoreToSpace title}}</a></li>
+          <li class="nav-header nav-list-item{{#if notMyGroup}} nav-no-animate{{/if}}" data-group="{{group}}"><a href="{{#if notMyGroup}}/{{group}}/index.html{{/if}}#api-{{group}}">{{underscoreToSpace title}}</a></li>
         {{/if}}
       {{else}}
-        <li class="{{#if hidden}}hide {{/if}}" data-group="{{group}}" data-name="{{name}}" data-version="{{version}}">
-          <a href="#api-{{group}}-{{name}}" class="nav-list-item">{{title}}</a>
+        <li class="{{#if hidden}}hide {{/if}}{{#if notMyGroup}} nav-no-animate{{/if}}" data-group="{{group}}" data-name="{{name}}" data-version="{{version}}">
+          <a href="{{#if notMyGroup}}/{{group}}/index.html{{/if}}#api-{{group}}-{{name}}" class="nav-list-item">{{title}}</a>
         </li>
       {{/if}}
     {{/if}}
